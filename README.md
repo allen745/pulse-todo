@@ -22,22 +22,6 @@ It is **not** a generic todo list. It is a **timetable-first planner** designed 
 
 ---
 
-## About the author
-
-| | |
-|---|---|
-| **Name** | Allen Stivanson Christian |
-| **GitHub** | [allen745](https://github.com/allen745) |
-| **Portfolio** | [allen745.github.io](https://allen745.github.io) |
-| **Location** | Anand, Gujarat, India |
-| **Focus** | AI & ML Engineering · Full Stack Development · Building AI agents & web projects |
-
-Allen is an **AI & ML Engineer / Full Stack Developer** and **patent holder**, practicing **Python + DSA daily** and shipping practical AI and web products. Pulse is one of those student-life tools — built to solve a real weekly workflow: *classes + personal work, day by day*.
-
-Other public projects on the same account include portfolio work, games, and AI experiments (for example on [GitHub @allen745](https://github.com/allen745)).
-
----
-
 ## Who this app is for
 
 - **Primary:** ADIT **B.Tech. AI&DS Semester 3** students (especially **Division 1**)
@@ -258,24 +242,66 @@ Or connect the GitHub repo to Vercel for automatic deploys on every push.
 
 ---
 
+## Project links
+
+- **Live Pulse app:** https://pulse-todo-xi.vercel.app  
+- **This repository:** https://github.com/allen745/pulse-todo  
+
+---
+
 ## License & disclaimer
 
-- Built as a **student utility / portfolio project** by [Allen Stivanson Christian](https://github.com/allen745).
+- Built as a **student utility / portfolio project**.
 - The embedded timetable is for **personal academic planning**. Official schedules remain the property of ADIT / CVM University — always verify against the latest notice from the department if something conflicts.
 - No warranty; use at your own discretion.
 
 ---
 
-## Links
+## About the author
 
-- **Live Pulse app:** https://pulse-todo-xi.vercel.app  
-- **This repository:** https://github.com/allen745/pulse-todo  
-- **Author GitHub:** https://github.com/allen745  
-- **Author portfolio:** https://allen745.github.io  
+<p align="center">
+  <a href="https://github.com/allen745">
+    <img
+      src="https://avatars.githubusercontent.com/u/226674447?v=4"
+      alt="Allen Stivanson Christian — GitHub profile"
+      width="140"
+      height="140"
+      style="border-radius:50%;"
+    />
+  </a>
+</p>
+
+<p align="center">
+  <b>Allen Stivanson Christian</b><br/>
+  <a href="https://github.com/allen745">@allen745</a>
+</p>
+
+Click the profile picture above to open the GitHub profile: **[https://github.com/allen745](https://github.com/allen745)**
+
+| | |
+|---|---|
+| **Name** | Allen Stivanson Christian |
+| **Role** | AI & ML Engineer · Full Stack Developer · Patent Holder |
+| **Location** | Anand, Gujarat, India |
+| **Focus** | Python + DSA daily · ML engineering · AI agents · web projects |
+| **GitHub** | [github.com/allen745](https://github.com/allen745) |
+| **Portfolio** | [portfolio-demo-tan-six.vercel.app](https://portfolio-demo-tan-six.vercel.app/) |
+| **LinkedIn** | [linkedin.com/in/allen-christian-708545409](https://www.linkedin.com/in/allen-christian-708545409/) |
+
+Allen builds practical AI and full-stack products while studying and practicing core CS skills every day. **Pulse** is a student-life tool from that work — a systematic ADIT AI&DS Sem-3 timetable plus a per-day task checklist in one place.
+
+Other public work includes portfolio demos, games, and AI experiments on [GitHub @allen745](https://github.com/allen745).
+
+### Connect
+
+- **GitHub:** [https://github.com/allen745](https://github.com/allen745)  
+- **Portfolio:** [https://portfolio-demo-tan-six.vercel.app/](https://portfolio-demo-tan-six.vercel.app/)  
+- **LinkedIn:** [https://www.linkedin.com/in/allen-christian-708545409/](https://www.linkedin.com/in/allen-christian-708545409/)  
+- **Pulse live:** [https://pulse-todo-xi.vercel.app](https://pulse-todo-xi.vercel.app)
 
 ---
 
 <p align="center">
   <b>Pulse</b> — move through the week, class by class, task by task.<br/>
-  Built for ADIT AI&amp;DS Sem-3 · by Allen Stivanson Christian (@allen745)
+  Built for ADIT AI&amp;DS Sem-3
 </p>
