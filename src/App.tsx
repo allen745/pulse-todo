@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AddTaskForm } from './components/AddTaskForm'
 import { DayTabs } from './components/DayTabs'
+import { ExamSchedule } from './components/ExamSchedule'
 import { PlanItem } from './components/PlanItem'
 import { DAYS, getTodayDayId, timeToMinutes } from './data/timetable'
 import { useDayPlan } from './hooks/useDayPlan'
@@ -33,6 +35,7 @@ function ProgressRing({ value, size = 54 }: { value: number; size?: number }) {
 }
 
 export default function App() {
+  const [mode, setMode] = useState<'planner' | 'exams'>('planner')
   const today = getTodayDayId()
   const {
     day,
@@ -87,63 +90,88 @@ export default function App() {
           </div>
         </header>
 
-        <div className="layout">
-          <DayTabs day={day} onChange={setDay} today={today} batchFilter={batchFilter} />
-
-          <motion.section
-            className="board"
-            key={day}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        <div className="mode-tabs" role="tablist" aria-label="View">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mode === 'planner'}
+            className={`mode-tab${mode === 'planner' ? ' is-active' : ''}`}
+            onClick={() => setMode('planner')}
           >
-            <div className="board-head">
-              <div>
-                <p className="eyebrow">{day === today ? 'Today' : 'Schedule'}</p>
-                <h1 className="day-title">{dayLabel}</h1>
-                <p className="day-stats">
-                  {stats.total === 0
-                    ? 'No classes — add your own tasks'
-                    : `${stats.open} remaining · ${stats.completed} done`}
-                </p>
-              </div>
-              {stats.completed > 0 && (
-                <button type="button" className="ghost-btn" onClick={resetDay}>
-                  Reset checks
-                </button>
-              )}
-            </div>
-
-            <AddTaskForm defaultDay={day} onAdd={addTask} />
-
-            {items.length === 0 ? (
-              <div className="empty">
-                <p className="empty-title">Open runway</p>
-                <p className="empty-copy">Saturday is free. Drop homework or revision here.</p>
-              </div>
-            ) : (
-              <div className="timeline">
-                <AnimatePresence initial={false} mode="popLayout">
-                  {items.map((item, index) => (
-                    <div key={item.id} className="timeline-block">
-                      {showLunch && index === lunchIndex && (
-                        <div className="lunch">
-                          <span>Lunch break</span>
-                          <span>12:40 – 1:25 pm</span>
-                        </div>
-                      )}
-                      <PlanItem
-                        item={item}
-                        onToggle={toggle}
-                        onDelete={item.isCustom ? deleteTask : undefined}
-                      />
-                    </div>
-                  ))}
-                </AnimatePresence>
-              </div>
-            )}
-          </motion.section>
+            Planner
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mode === 'exams'}
+            className={`mode-tab${mode === 'exams' ? ' is-active' : ''}`}
+            onClick={() => setMode('exams')}
+          >
+            Exams
+          </button>
         </div>
+
+        {mode === 'planner' ? (
+          <div className="layout">
+            <DayTabs day={day} onChange={setDay} today={today} batchFilter={batchFilter} />
+
+            <motion.section
+              className="board"
+              key={day}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="board-head">
+                <div>
+                  <p className="eyebrow">{day === today ? 'Today' : 'Schedule'}</p>
+                  <h1 className="day-title">{dayLabel}</h1>
+                  <p className="day-stats">
+                    {stats.total === 0
+                      ? 'No classes — add your own tasks'
+                      : `${stats.open} remaining · ${stats.completed} done`}
+                  </p>
+                </div>
+                {stats.completed > 0 && (
+                  <button type="button" className="ghost-btn" onClick={resetDay}>
+                    Reset checks
+                  </button>
+                )}
+              </div>
+
+              <AddTaskForm defaultDay={day} onAdd={addTask} />
+
+              {items.length === 0 ? (
+                <div className="empty">
+                  <p className="empty-title">Open runway</p>
+                  <p className="empty-copy">Saturday is free. Drop homework or revision here.</p>
+                </div>
+              ) : (
+                <div className="timeline">
+                  <AnimatePresence initial={false} mode="popLayout">
+                    {items.map((item, index) => (
+                      <div key={item.id} className="timeline-block">
+                        {showLunch && index === lunchIndex && (
+                          <div className="lunch">
+                            <span>Lunch break</span>
+                            <span>12:40 – 1:25 pm</span>
+                          </div>
+                        )}
+                        <PlanItem
+                          item={item}
+                          onToggle={toggle}
+                          onDelete={item.isCustom ? deleteTask : undefined}
+                        />
+                      </div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              )}
+            </motion.section>
+          </div>
+        ) : (
+          <ExamSchedule />
+        )}
 
         <footer className="footer">
           <span>Effective 06/07/2026 · Room 211</span>
