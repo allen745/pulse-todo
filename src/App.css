@@ -646,6 +646,190 @@ button {
   font-weight: 600;
 }
 
+/* ---------- Tabs (Planner / Exams) ---------- */
+
+.mode-tabs {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.mode-tab {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: #eef7f3;
+  font-size: 0.82rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.mode-tab:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.mode-tab.is-active {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: #06231a;
+}
+
+/* ---------- Exam schedule ---------- */
+
+.exam-board {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  padding: 1.15rem 1.15rem 1.35rem;
+}
+
+.exam-board-head {
+  margin-bottom: 1.1rem;
+}
+
+.exam-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.exam-day-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.exam-day-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px dashed var(--line-2);
+}
+
+.exam-day-date {
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.exam-countdown {
+  border-radius: 999px;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: #eef2f0;
+  color: var(--ink-2);
+}
+
+.exam-countdown.is-today {
+  background: var(--mint-soft);
+  color: var(--mint-deep);
+}
+
+.exam-countdown.is-soon {
+  background: var(--tut-soft);
+  color: var(--tut);
+}
+
+.exam-countdown.is-past {
+  background: #f1f1f1;
+  color: var(--mute);
+}
+
+.exam-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.exam-card {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.exam-card:hover {
+  border-color: var(--line-2);
+  box-shadow: 0 10px 28px rgba(16, 35, 28, 0.06);
+  transform: translateY(-1px);
+}
+
+.exam-card-sr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--mint-soft);
+  color: var(--mint-deep);
+  font-family: var(--display);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.exam-card-title {
+  margin: 0;
+  font-size: 1.0rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.exam-card-meta {
+  margin: 0.3rem 0 0;
+  font-size: 0.84rem;
+  font-weight: 550;
+  color: var(--mute);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.exam-code {
+  font-family: var(--display);
+  font-weight: 700;
+  color: var(--mint-deep);
+}
+
+.exam-dot {
+  opacity: 0.6;
+}
+
+@media (max-width: 640px) {
+  .exam-board {
+    padding: 0.95rem;
+  }
+
+  .exam-card {
+    grid-template-columns: 26px 1fr;
+    padding: 0.75rem 0.8rem;
+  }
+
+  .exam-card-sr {
+    width: 26px;
+    height: 26px;
+    font-size: 0.78rem;
+  }
+}
+
 @media (max-width: 860px) {
   .layout {
     grid-template-columns: 1fr;
