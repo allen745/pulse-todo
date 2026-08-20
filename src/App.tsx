@@ -1,14 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AddTaskForm } from './components/AddTaskForm'
 import { DayTabs } from './components/DayTabs'
 import { ExamSchedule } from './components/ExamSchedule'
 import { PlanItem } from './components/PlanItem'
+import { nextExam, shouldDefaultToExams } from './data/exams'
 import { DAYS, getTodayDayId, timeToMinutes } from './data/timetable'
 import { useDayPlan } from './hooks/useDayPlan'
 import './App.css'
 
 const BATCHES = ['all', '1A12', '1B12', '1C12'] as const
+const MODE_KEY = 'pulse-view-mode-v1'
+
+type AppMode = 'planner' | 'exams'
+
+function readMode(): AppMode {
+  if (typeof window === 'undefined') return 'planner'
+  const hash = window.location.hash.replace(/^#/, '')
+  if (hash === 'exams' || hash === 'planner') return hash
+  try {
+    const saved = localStorage.getItem(MODE_KEY)
+    if (saved === 'exams' || saved === 'planner') return saved
+  } catch {
+    // ignore storage errors
+  }
+  return shouldDefaultToExams() ? 'exams' : 'planner'
+}
 
 function ProgressRing({ value, size = 54 }: { value: number; size?: number }) {
   const stroke = 5
@@ -35,8 +52,21 @@ function ProgressRing({ value, size = 54 }: { value: number; size?: number }) {
 }
 
 export default function App() {
-  const [mode, setMode] = useState<'planner' | 'exams'>('planner')
+  const [mode, setMode] = useState<AppMode>(readMode)
   const today = getTodayDayId()
+  const upcoming = nextExam()
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(MODE_KEY, mode)
+    } catch {
+      // ignore storage errors
+    }
+    const hash = mode === 'exams' ? '#exams' : '#planner'
+    if (window.location.hash !== hash) {
+      history.replaceState(null, '', `${window.location.pathname}${window.location.search}${hash}`)
+    }
+  }, [mode])
   const {
     day,
     setDay,
@@ -72,21 +102,32 @@ export default function App() {
             <p className="brand-sub">ADIT · AI&amp;DS Sem-3 · Div 1</p>
           </div>
           <div className="top-meta">
-            <label className="batch">
-              Batch
-              <select
-                value={batchFilter}
-                onChange={(e) => setBatchFilter(e.target.value)}
-                aria-label="Lab batch filter"
+            {upcoming && mode === 'planner' && (
+              <button
+                type="button"
+                className="next-exam-chip"
+                onClick={() => setMode('exams')}
               >
-                {BATCHES.map((b) => (
-                  <option key={b} value={b}>
-                    {b === 'all' ? 'All' : b}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <ProgressRing value={stats.progress} />
+                Next paper · {upcoming.displayDate} · {upcoming.time.split(/\s+TO\s+/i)[0]}
+              </button>
+            )}
+            {mode === 'planner' && (
+              <label className="batch">
+                Batch
+                <select
+                  value={batchFilter}
+                  onChange={(e) => setBatchFilter(e.target.value)}
+                  aria-label="Lab batch filter"
+                >
+                  {BATCHES.map((b) => (
+                    <option key={b} value={b}>
+                      {b === 'all' ? 'All' : b}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {mode === 'planner' && <ProgressRing value={stats.progress} />}
           </div>
         </header>
 
@@ -174,8 +215,17 @@ export default function App() {
         )}
 
         <footer className="footer">
-          <span>Effective 06/07/2026 · Room 211</span>
-          <span>Tick a class when you’re done</span>
+          {mode === 'exams' ? (
+            <>
+              <span>Internal exams · 24–27 Aug 2026</span>
+              <span>AI&amp;DS Sem-3 datesheet</span>
+            </>
+          ) : (
+            <>
+              <span>Effective 06/07/2026 · Room 211</span>
+              <span>Tick a class when you’re done</span>
+            </>
+          )}
         </footer>
       </div>
     </div>
